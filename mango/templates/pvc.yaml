@@ -1,0 +1,27 @@
+{{- if .Values.persistent.enabled -}}
+{{- if not .Values.persistent.existingClaim -}}
+apiVersion: "v1"
+kind: PersistentVolumeClaim
+metadata:
+{{- if .Values.persistent.annotations }}
+  annotations:
+{{ toYaml .Values.persistent.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "mango.labels" . | nindent 4 }}
+  name: {{ template "mango.fullname" . }}
+spec:
+  accessModes:
+{{ toYaml .Values.persistent.accessModes | indent 4 }}
+{{- if .Values.persistent.storageClass }}
+{{- if (eq "-" .Values.persistent.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistent.storageClass }}"
+{{- end }}
+{{- end }}
+  resources:
+    requests:
+      storage: "{{ .Values.persistent.size }}"
+{{- end -}}
+{{- end -}}

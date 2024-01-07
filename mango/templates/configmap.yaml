@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mango.fullname" . }}
+  labels:
+    {{- include "mango.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+    ---
+    {{- if not .Values.config.disableDefault }}
+    auth_proxy_header_name: ""
+    base_url: /
+    cache_enabled: true
+    cache_log_enabled: true
+    cache_size_mbs: 50
+    db_path: /var/lib/mango/mango.db
+    default_username: {{ .Values.config.username }}
+    disable_login: false
+    download_timeout_seconds: 30
+    host: 0.0.0.0
+    library_cache_path: /var/lib/mango/library.yml.gz
+    library_path: {{ .Values.config.libraryPath }}
+    log_level: info
+    plugin_path: /var/lib/mango/plugins
+    port: {{ .Values.service.port }}
+    queue_db_path: /var/lib/mango/queue.db
+    scan_interval_minutes: 0
+    session_secret: mango-session-secret
+    thumbnail_generation_interval_hours: 0
+    upload_path: /var/lib/mango/uploads
+    {{ end }}
+
+    {{- with .Values.config.extraConfig }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
