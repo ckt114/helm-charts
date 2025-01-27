@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "squid.fullname" . }}
+  labels:
+    {{- include "squid.labels" . | nindent 4 }}
+data:
+  {{- if .Values.squid.enableSafePorts }}
+  safe-ports.conf: |
+    acl Safe_ports port 80
+    acl Safe_ports port 21
+    acl Safe_ports port 443
+    acl Safe_ports port 70
+    acl Safe_ports port 210
+    acl Safe_ports port 1025-65535
+    acl Safe_ports port 280
+    acl Safe_ports port 488
+    acl Safe_ports port 591
+    acl Safe_ports port 777
+  {{- end }}
+
+  {{- if .Values.squid.authentication.enabled }}
+  basic-auth.conf: |
+    auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/htpasswd
+    auth_param basic realm proxy
+    acl authenticated proxy_auth REQUIRED
+    http_access allow authenticated
+  {{- end }}
+
+
+  {{- if .Values.squid.https.enabled }}
+  https-bumping.conf: |
+    https_port 3128 tls-cert={{ .Values.squid.https.secret.path }} generate-host-certificates=off dynamic_cert_mem_cache_size=16MB
+    sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/squid/ssl_db -M 20MB
+    acl step1 at_step SslBump1
+    ssl_bump peek step1
+    ssl_bump bump all
+    ssl_bump splice all
+  {{- end }}
+
+  {{ range .Values.squid.extraConfigs }}
+  {{ .name }}.conf: |
+  {{- .settings | nindent 4 }}
+  {{- end }}
