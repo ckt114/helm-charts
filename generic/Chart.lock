@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://charts.ckt114.net
+  version: 4.5.2
+digest: sha256:50dbf92addd976a9643bbaf2883ebaea0164621aba34696b0fa889e850e0e811
+generated: "2025-02-02T22:50:04.324785-05:00"

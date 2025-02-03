@@ -1,0 +1,21 @@
+apiVersion: v2
+
+name: generic
+version: 0.1.0
+appVersion: 0.1.0
+description: A generic chart leveraging common library chart for use with any application.
+
+maintainers:
+- email: chung.k.tran@gmail.com
+  name: Chung Tran
+
+dependencies:
+- name: common
+  repository: https://charts.ckt114.net
+  version: 4.5.2
+
+home: https://charts.ckt114.net
+
+sources:
+- https://github.com/ckt114/library-charts/blob/main/charts/stable/common/values.yaml
+
