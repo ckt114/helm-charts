@@ -1,8 +1,7 @@
 apiVersion: v2
 
 name: generic
-version: 0.1.0
-appVersion: 0.1.0
+version: 0.1.1
 description: A generic chart leveraging common library chart for use with any application.
 
 maintainers:
@@ -12,7 +11,7 @@ maintainers:
 dependencies:
 - name: common
   repository: https://charts.ckt114.net
-  version: 4.5.2
+  version: 4.5.3
 
 home: https://charts.ckt114.net
 

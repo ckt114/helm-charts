@@ -1,6 +1,6 @@
 dependencies:
 - name: common
   repository: https://charts.ckt114.net
-  version: 4.5.2
-digest: sha256:50dbf92addd976a9643bbaf2883ebaea0164621aba34696b0fa889e850e0e811
-generated: "2025-02-02T22:50:04.324785-05:00"
+  version: 4.5.3
+digest: sha256:0626c920f1f733f6be599f0b68d2d08d8a485b5124ab24efc292d097c8a1cdf6
+generated: "2025-02-04T17:51:13.220181-05:00"
